@@ -8,7 +8,7 @@ class Work:
     X = None
     model = None
     pred = None
-
+    res_df = None
     def __init__(self):
         """Constructor"""
         pass
@@ -31,6 +31,18 @@ class Work:
         self.df.insert(loc=len(self.df.columns), column="network_result", value=self.pred)
         self.df.to_csv(_result_path, sep=',')
         print(self.pred)
+        self.res_df = pd.read_csv("test_dataset_test.csv")
+        self.res_df.insert(loc=len(self.res_df.columns), column="target", value=self.pred)
+        self.res_df.to_csv('base_solution.csv', mode='w', index=False)
+        #self.res_df = pd.DataFrame({"student_id": [],
+        #            "program_id": [],
+        #            "target": []})
+        #self.res_df["student_id"] = self.df["student_id"]
+        #self.res_df["program_id"] = self.df["program_id"]
+        #self.res_df["target"] = self.pred
+        #
+        #self.res_df.reset_index()[['student_id', 'program_id', 'target']] \
+        #    .to_csv('base_solution.csv', index=False)
 
     def model_work(self, _path_to_csv_file):
         df = pd.read_csv(_path_to_csv_file)
